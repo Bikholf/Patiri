@@ -1,5 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "example_message": "Guten Tag {username}",
-  "HELLO": "Hallo"
+  "HELLO": "Hallo",
+  "ENGLISH": "Englisch",
+  "GERMAN": "Deutsch"
 }
