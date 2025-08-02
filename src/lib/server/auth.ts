@@ -2,7 +2,7 @@ import { GitHub } from "arctic";
 import 'dotenv/config';
 import { Lucia } from "lucia";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { adapter } from "../../db/schema.js";
+import { adapter } from "$lib/server/db/schema.js";
 
 
 export const lucia = new Lucia(adapter, {
