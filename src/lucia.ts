@@ -1,20 +1,10 @@
-import { NODE, NODE_ENV } from '$env/static/private'
-import { Lucia } from "lucia";
+// lucia.ts
+import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
+import pg from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { user, session } from "./db/schema.js";
 
-const adapter = new BetterSQLite3Adapter(db); // your adapter
+const pool = new pg.Pool();
+const db = drizzle(pool);
 
-export const lucia = new Lucia(adapter, {
-	sessionCookie: {
-		attributes: {
-			// set to `true` when using HTTPS
-			secure: NODE_ENV === "production",
-		}
-	}
-});
-
-// IMPORTANT!
-declare module "lucia" {
-	interface Register {
-		Lucia: typeof lucia;
-	}
-}
+const adapter = new DrizzlePostgreSQLAdapter(db, session, user);
