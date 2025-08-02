@@ -1,37 +1,100 @@
-// schema.ts
-import { pgTable, text, timestamp, numeric } from "drizzle-orm/pg-core";
-import { relations } from 'drizzle-orm';
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { drizzle } from "drizzle-orm/node-postgres";
-import pg from "pg";
+import {
+    boolean,
+    timestamp,
+    pgTable,
+    text,
+    primaryKey,
+    integer,
+} from "drizzle-orm/pg-core"
+import postgres from "postgres"
+import { drizzle } from "drizzle-orm/postgres-js"
+import type { AdapterAccountType } from "@auth/core/adapters"
+import "dotenv/config.js"
 
-const pool = new pg.Pool();
-const db = drizzle(pool);
+const connectionString = "postgres://postgres:postgres@127.0.0.1:5432/patiri"
+const pool = postgres(connectionString, { max: 1 })
 
+export const db = drizzle(pool)
 
-export const user = pgTable("user", {
-  id: text("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  email: text("email").notNull().unique(),
-  firstName: text("firstName"),
-  lastName: text("lastName"),
-  createdAt: timestamp("createdAt").notNull().defaultNow(),
-  githubId: numeric("githubId").unique()
-});
+export const users = pgTable("user", {
+    id: text("id")
+        .primaryKey()
+        .$defaultFn(() => crypto.randomUUID()),
+    name: text("name"),
+    email: text("email").unique(),
+    emailVerified: timestamp("emailVerified", { mode: "date" }),
+    image: text("image"),
+})
 
-export const session = pgTable("session", {
-  id: text("id").primaryKey(),
-  userId: text("userId")
-    .notNull()
-    .references(() => user.id),
-  expiresAt: timestamp("expiresAt", {
-    withTimezone: true,
-    mode: "date"
-  }).notNull(),
-});
+export const accounts = pgTable(
+    "account",
+    {
+        userId: text("userId")
+            .notNull()
+            .references(() => users.id, { onDelete: "cascade" }),
+        type: text("type").$type<AdapterAccountType>().notNull(),
+        provider: text("provider").notNull(),
+        providerAccountId: text("providerAccountId").notNull(),
+        refresh_token: text("refresh_token"),
+        access_token: text("access_token"),
+        expires_at: integer("expires_at"),
+        token_type: text("token_type"),
+        scope: text("scope"),
+        id_token: text("id_token"),
+        session_state: text("session_state"),
+    },
+    (account) => [
+        {
+            compoundKey: primaryKey({
+                columns: [account.provider, account.providerAccountId],
+            }),
+        },
+    ]
+)
 
-export const userRelations = relations(user, ({ many }) => ({
-  sessions: many(session),
-}));
+export const sessions = pgTable("session", {
+    sessionToken: text("sessionToken").primaryKey(),
+    userId: text("userId")
+        .notNull()
+        .references(() => users.id, { onDelete: "cascade" }),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+})
 
-export const adapter = new DrizzlePostgreSQLAdapter(db, session, user);
+export const verificationTokens = pgTable(
+    "verificationToken",
+    {
+        identifier: text("identifier").notNull(),
+        token: text("token").notNull(),
+        expires: timestamp("expires", { mode: "date" }).notNull(),
+    },
+    (verificationToken) => [
+        {
+            compositePk: primaryKey({
+                columns: [verificationToken.identifier, verificationToken.token],
+            }),
+        },
+    ]
+)
+
+export const authenticators = pgTable(
+    "authenticator",
+    {
+        credentialID: text("credentialID").notNull().unique(),
+        userId: text("userId")
+            .notNull()
+            .references(() => users.id, { onDelete: "cascade" }),
+        providerAccountId: text("providerAccountId").notNull(),
+        credentialPublicKey: text("credentialPublicKey").notNull(),
+        counter: integer("counter").notNull(),
+        credentialDeviceType: text("credentialDeviceType").notNull(),
+        credentialBackedUp: boolean("credentialBackedUp").notNull(),
+        transports: text("transports"),
+    },
+    (authenticator) => [
+        {
+            compositePK: primaryKey({
+                columns: [authenticator.userId, authenticator.credentialID],
+            }),
+        },
+    ]
+)

@@ -65,6 +65,8 @@
 		"svelte"
 	],
 	"dependencies": {
+		"@auth/drizzle-adapter": "^1.10.0",
+		"@auth/sveltekit": "^1.10.0",
 		"@lucia-auth/adapter-drizzle": "^1.1.0",
 		"arctic": "^3.7.0",
 		"dotenv": "^17.2.1",

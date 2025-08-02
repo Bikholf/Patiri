@@ -10,16 +10,6 @@
         "sourceMap": true,
         "strict": true,
         "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "baseUrl": ".",
-        "paths": {
-            "$lib/*": ["src/lib/*"],
-            "$db/*": ["src/lib/server/db/*"],
-            "components/*": ["src/lib/components/*"],
-            "utils/*": ["src/lib/utils/*"],
-            "ui/*": ["src/lib/components/ui/*"],
-            "hooks/*": ["src/lib/hooks/*"],
-            "lib/*": ["src/lib/*"]
-        }
+        "moduleResolution": "NodeNext"
     }
 }
