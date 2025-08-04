@@ -3,10 +3,15 @@
     import { Button } from "$lib/components/ui/button/index.js";
     import { setLocale, getLocale } from "../paraglide/runtime.js";
     import { SignIn, SignOut } from "@auth/sveltekit/components";
+    import { page } from "$app/state";
+
+    console.log(page.data.session)
 
     function setLang(newLang: "en" | "de") {
         setLocale(newLang);
     }
+
+
 </script>
 
 <h1>Welcome to your library project</h1>

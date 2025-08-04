@@ -11,8 +11,11 @@ import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "@auth/core/adapters"
 import "dotenv/config.js"
 
-const connectionString = "postgres://postgres:postgres@127.0.0.1:5432/patiri"
-const pool = postgres(connectionString, { max: 1 })
+const AUTH_DRIZZLE_URL = process.env.AUTH_DRIZZLE_URL;
+
+if (!AUTH_DRIZZLE_URL) throw new Error('AUTH_DRIZZLE_URL is not set');
+
+const pool = postgres(AUTH_DRIZZLE_URL, { max: 1 })
 
 export const db = drizzle(pool)
 
