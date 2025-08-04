@@ -5,7 +5,6 @@ import { handle as authHandle } from "./auth.js";
 
 const protectionHandle: Handle = async ({ event, resolve }) => {
     try {
-        console.log("path: ", event.url.pathname)
         // Get the session for all routes
         const session = await event.locals.auth();
         
@@ -19,8 +18,9 @@ const protectionHandle: Handle = async ({ event, resolve }) => {
                                event.route.id?.includes('(app)');
         
         if (isProtectedRoute && !session?.user) {
-            // Redirect to login if not authenticated
-            throw redirect(303, '/login');
+            // Store the original URL as a query parameter
+            const returnUrl = encodeURIComponent(event.url.pathname + event.url.search);
+            throw redirect(303, `/login?returnUrl=${returnUrl}`);
         }
         
         return resolve(event);
@@ -34,7 +34,8 @@ const protectionHandle: Handle = async ({ event, resolve }) => {
         }
         
         // For other errors, redirect to login as fallback
-        throw redirect(303, '/login');
+        const returnUrl = encodeURIComponent(event.url.pathname + event.url.search);
+        throw redirect(303, `/login?returnUrl=${returnUrl}`);
     }
 };
 

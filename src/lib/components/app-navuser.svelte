@@ -10,6 +10,9 @@
     import CreditCardIcon from "@lucide/svelte/icons/credit-card";
     import LogOutIcon from "@lucide/svelte/icons/log-out";
     import SparklesIcon from "@lucide/svelte/icons/sparkles";
+    import { SignOut } from "@auth/sveltekit/components";
+    import { Button } from "$lib/components/ui/button/index.js";
+    import { signOut } from "@auth/sveltekit/client";
 
     const sidebar = useSidebar();
 </script>
@@ -31,10 +34,14 @@
                                         src={page.data.session.user?.image}
                                         alt="User profile picture"
                                     />
-                                    <Avatar.Fallback class="rounded-lg">CN</Avatar.Fallback>
+                                    <Avatar.Fallback class="rounded-lg"
+                                        >CN</Avatar.Fallback
+                                    >
                                 </Avatar.Root>
                             {/if}
-                            <div class="grid flex-1 text-left text-sm leading-tight">
+                            <div
+                                class="grid flex-1 text-left text-sm leading-tight"
+                            >
                                 <span class="truncate font-medium">
                                     {page.data.session.user?.name}
                                 </span>
@@ -59,10 +66,10 @@
                     {#if page.data.session}
                         <div
                             class="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
-                        >   
+                        >
                             {#if page.data.session.user?.image}
                                 <Avatar.Root class="size-8 rounded-lg">
-                                     <Avatar.Image
+                                    <Avatar.Image
                                         src={page.data.session.user?.image}
                                         alt="User profile picture"
                                     />
@@ -74,11 +81,13 @@
                             <div
                                 class="grid flex-1 text-left text-sm leading-tight"
                             >
-                                <span class="truncate font-medium">{page.data.session.user?.name}</span
+                                <span class="truncate font-medium"
+                                    >{page.data.session.user?.name}</span
                                 >
-                                <span class="truncate text-xs">{page.data.session.user?.email}</span>
+                                <span class="truncate text-xs"
+                                    >{page.data.session.user?.email}</span
+                                >
                             </div>
-
                         </div>
                     {:else}
                         <h3>You are not logged in!</h3>
@@ -107,9 +116,9 @@
                     </DropdownMenu.Item>
                 </DropdownMenu.Group>
                 <DropdownMenu.Separator />
-                <DropdownMenu.Item>
+                <DropdownMenu.Item onclick={() => signOut()}>
                     <LogOutIcon />
-                    Log out
+                    <span>Log out</span>
                 </DropdownMenu.Item>
             </DropdownMenu.Content>
         </DropdownMenu.Root>
