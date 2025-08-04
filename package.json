@@ -2,7 +2,8 @@
 	"name": "patiri",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite dev --host",
+		"dev:safe": "nodemon --exec \"npm run dev\" --watch src --ext svelte,ts,js",
 		"build": "vite build && npm run prepack",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -50,6 +51,7 @@
 		"bits-ui": "^2.8.12",
 		"clsx": "^2.1.1",
 		"drizzle-kit": "^0.30.6",
+		"nodemon": "^3.1.10",
 		"publint": "^0.3.2",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",

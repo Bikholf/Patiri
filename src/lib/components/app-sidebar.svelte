@@ -6,11 +6,17 @@
   import SearchIcon from "@lucide/svelte/icons/search";
   import SettingsIcon from "@lucide/svelte/icons/settings";
   import NavUser from "./app-navuser.svelte";
+  import CompassIcon from "@lucide/svelte/icons/compass"
 
   const items = [
     {
+      title: "Start",
+      url: "/",
+      icon: CompassIcon,
+    },
+    {
       title: "Home",
-      url: "#",
+      url: "/home",
       icon: HouseIcon,
     },
     {
@@ -20,7 +26,7 @@
     },
     {
       title: "Calendar",
-      url: "#",
+      url: "/calender",
       icon: CalendarIcon,
     },
     {
@@ -34,12 +40,6 @@
       icon: SettingsIcon,
     },
   ];
-
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    avatar: "https://raw.githubusercontent.com/Bikholf/LinkPage/refs/heads/main/public/profile.jpg"
-  };
 </script>
 
 <Sidebar.Root collapsible="icon">
@@ -65,7 +65,7 @@
     </Sidebar.Group>
   </Sidebar.Content>
    <Sidebar.Footer>
-    <NavUser user={user} />
+    <NavUser />
   </Sidebar.Footer>
   <Sidebar.Rail />
 </Sidebar.Root>

@@ -1,0 +1,124 @@
+<script lang="ts">
+	import { page } from '$app/stores';
+	import { dev } from '$app/environment';
+
+	$: message = $page.error?.message ?? 'Ein unerwarteter Fehler ist aufgetreten';
+	$: errorDetails = dev && $page.error instanceof Error ? $page.error.stack : null;
+</script>
+
+<svelte:head>
+	<title>Fehler - Patiri</title>
+</svelte:head>
+
+<div class="error-container">
+	<div class="error-content">
+		<h1>Oops! 🚫</h1>
+		<h2>Etwas ist schief gelaufen</h2>
+		<p class="error-message">{message}</p>
+		
+		<div class="error-actions">
+			<a href="/" class="btn btn-primary">Zur Startseite</a>
+			<button on:click={() => window.location.reload()} class="btn btn-secondary">
+				Seite neu laden
+			</button>
+		</div>
+
+		{#if errorDetails}
+			<details class="error-details">
+				<summary>Technische Details (Entwicklungsumgebung)</summary>
+				<pre>{errorDetails}</pre>
+			</details>
+		{/if}
+	</div>
+</div>
+
+<style>
+	.error-container {
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	}
+
+	.error-content {
+		text-align: center;
+		background: white;
+		padding: 3rem;
+		border-radius: 12px;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+		max-width: 500px;
+		width: 100%;
+	}
+
+	h1 {
+		font-size: 4rem;
+		margin: 0 0 1rem 0;
+	}
+
+	h2 {
+		color: #333;
+		margin: 0 0 1rem 0;
+		font-size: 1.5rem;
+	}
+
+	.error-message {
+		color: #666;
+		margin: 0 0 2rem 0;
+		font-size: 1.1rem;
+	}
+
+	.error-actions {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.btn {
+		padding: 0.75rem 1.5rem;
+		border: none;
+		border-radius: 6px;
+		text-decoration: none;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: transform 0.2s, box-shadow 0.2s;
+	}
+
+	.btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	}
+
+	.btn-primary {
+		background: #667eea;
+		color: white;
+	}
+
+	.btn-secondary {
+		background: #f8f9fa;
+		color: #333;
+		border: 1px solid #dee2e6;
+	}
+
+	.error-details {
+		margin-top: 2rem;
+		text-align: left;
+	}
+
+	.error-details summary {
+		cursor: pointer;
+		color: #666;
+		margin-bottom: 1rem;
+	}
+
+	.error-details pre {
+		background: #f8f9fa;
+		padding: 1rem;
+		border-radius: 4px;
+		overflow-x: auto;
+		font-size: 0.875rem;
+		white-space: pre-wrap;
+	}
+</style>

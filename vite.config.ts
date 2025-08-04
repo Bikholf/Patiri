@@ -11,5 +11,19 @@ export default defineConfig({
 			outdir: './src/paraglide'
 		}),
 		sveltekit()
-	]
+	],
+	server: {
+		fs: {
+			strict: false
+		}
+	},
+	optimizeDeps: {
+		exclude: ['@auth/sveltekit', '@auth/core', '@auth/drizzle-adapter']
+	},
+	ssr: {
+		noExternal: []
+	},
+	define: {
+		global: 'globalThis'
+	}
 });

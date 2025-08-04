@@ -6,6 +6,5 @@ import { db } from "$db/schema.js"
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
     adapter: DrizzleAdapter(db),
-    providers: [GitHub],
-    // debug: true,
-}) 
+    providers: [GitHub]
+}) // 

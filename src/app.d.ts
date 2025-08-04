@@ -4,6 +4,8 @@ declare global {
 	namespace App {
 		interface Locals {
 			auth: () => Promise<any>;
+			session: any;
+			user: any;
 		}
 	}
 }
