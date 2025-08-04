@@ -5,6 +5,7 @@ import { handle as authHandle } from "./auth.js";
 
 const protectionHandle: Handle = async ({ event, resolve }) => {
     try {
+        console.log(event.locals)
         // Get the session for all routes
         const session = await event.locals.auth();
         
