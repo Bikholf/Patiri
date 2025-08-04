@@ -7,6 +7,8 @@
   import SettingsIcon from "@lucide/svelte/icons/settings";
   import NavUser from "./app-navuser.svelte";
   import CompassIcon from "@lucide/svelte/icons/compass"
+  import LoginIcon from "@lucide/svelte/icons/log-in"
+  
 
   const items = [
     {
@@ -38,6 +40,11 @@
       title: "Settings",
       url: "/settings",
       icon: SettingsIcon,
+    },
+    {
+      title: "Login",
+      url: "/login",
+      icon: LoginIcon,
     },
   ];
 </script>

@@ -5,7 +5,7 @@ import { handle as authHandle } from "./auth.js";
 
 const protectionHandle: Handle = async ({ event, resolve }) => {
     try {
-        console.log(event.locals)
+        // console.log(event.locals)
         // Get the session for all routes
         const session = await event.locals.auth();
         
@@ -14,9 +14,7 @@ const protectionHandle: Handle = async ({ event, resolve }) => {
         event.locals.user = session?.user || null;
         
         // Check if the route is protected (inside (app) folder)
-        const isProtectedRoute = event.url.pathname.startsWith('/home') || 
-                               event.url.pathname.startsWith('/settings') ||
-                               event.route.id?.includes('(app)');
+        const isProtectedRoute = event.route.id?.includes('(protected)');
         
         if (isProtectedRoute && !session?.user) {
             // Store the original URL as a query parameter
