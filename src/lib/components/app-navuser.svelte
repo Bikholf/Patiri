@@ -10,9 +10,13 @@
     import CreditCardIcon from "@lucide/svelte/icons/credit-card";
     import LogOutIcon from "@lucide/svelte/icons/log-out";
     import SparklesIcon from "@lucide/svelte/icons/sparkles";
+    import SettingsIcon from "@lucide/svelte/icons/settings";
     import { SignOut } from "@auth/sveltekit/components";
     import { Button } from "$lib/components/ui/button/index.js";
     import { signOut } from "@auth/sveltekit/client";
+    import UserIcon from "@lucide/svelte/icons/user";
+    import User from "@lucide/svelte/icons/user";
+    import { m } from "../../paraglide/messages.js";
 
     const sidebar = useSidebar();
 </script>
@@ -96,29 +100,24 @@
                 <DropdownMenu.Separator />
                 <DropdownMenu.Group>
                     <DropdownMenu.Item>
-                        <SparklesIcon />
-                        Upgrade to Pro
+                        <a href="/profile" class="flex items-center gap-2">
+                            <UserIcon />
+                            {m.profile()}
+                        </a>
                     </DropdownMenu.Item>
                 </DropdownMenu.Group>
-                <DropdownMenu.Separator />
                 <DropdownMenu.Group>
                     <DropdownMenu.Item>
-                        <BadgeCheckIcon />
-                        Account
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item>
-                        <CreditCardIcon />
-                        Billing
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item>
-                        <BellIcon />
-                        Notifications
+                        <a href="/settings" class="flex items-center gap-2">
+                            <SettingsIcon />
+                            {m.settings()}
+                        </a>
                     </DropdownMenu.Item>
                 </DropdownMenu.Group>
                 <DropdownMenu.Separator />
                 <DropdownMenu.Item onclick={() => signOut()}>
                     <LogOutIcon />
-                    <span>Log out</span>
+                    <span>{m.logout()}</span>
                 </DropdownMenu.Item>
             </DropdownMenu.Content>
         </DropdownMenu.Root>

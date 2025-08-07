@@ -5,12 +5,17 @@
     import { SignIn, SignOut } from "@auth/sveltekit/components";
     import { page } from "$app/state";
     import { signIn } from "@auth/sveltekit/client";
+    import type { PageProps } from "./$types.js";
 
-    console.log(page.data.session)
+    console.log(page.data.session);
 
     function setLang(newLang: "en" | "de") {
         setLocale(newLang);
     }
+
+    let { data }: PageProps = $props();
+
+    let isAuthenticated = data.session?.user;
 
 
     async function triggerGithubSignIn() {
@@ -18,13 +23,12 @@
             // this will redirect the user to GitHub's OAuth flow
             await signIn("github", {
                 // optional: where to send the user after sign-in
-                callbackUrl: window.location.origin
+                callbackUrl: window.location.origin,
             });
         } catch (error) {
             console.error("GitHub sign-in failed", error);
         }
     }
-
 
 </script>
 

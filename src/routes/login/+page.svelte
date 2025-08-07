@@ -5,17 +5,22 @@
     import { Label } from "$lib/components/ui/label/index.js";
     import * as m from "../../paraglide/messages.js";
     import { signIn } from "@auth/sveltekit/client";
-    import type { PageProps } from './$types.js';
+    import type { PageProps } from "./$types.js";
     import { page } from "$app/state";
+    import { ModeWatcher } from "mode-watcher";
 
-	let { data }: PageProps = $props();
+    let { data }: PageProps = $props();
+
+    let isAuthenticated = data.session?.user;
 
     // Get return URL from page data or URL params
-    let returnUrl = data.returnUrl || page.url.searchParams.get('returnUrl');
+    let returnUrl = data.returnUrl || page.url.searchParams.get("returnUrl");
 
     async function handleGithubLogin() {
         try {
-            const options = returnUrl ? { redirectTo: decodeURIComponent(returnUrl) } : {};
+            const options = returnUrl
+                ? { redirectTo: decodeURIComponent(returnUrl) }
+                : {};
             // this will redirect the user to GitHub's OAuth flow
             await signIn("github", options);
         } catch (error) {
@@ -25,7 +30,9 @@
 
     async function handleGoogleLogin() {
         try {
-            const options = returnUrl ? { redirectTo: decodeURIComponent(returnUrl) } : {};
+            const options = returnUrl
+                ? { redirectTo: decodeURIComponent(returnUrl) }
+                : {};
             // this will redirect the user to Google's OAuth flow
             await signIn("google", options);
         } catch (error) {
@@ -35,7 +42,9 @@
 
     async function handleDiscordLogin() {
         try {
-            const options = returnUrl ? { redirectTo: decodeURIComponent(returnUrl) } : {};
+            const options = returnUrl
+                ? { redirectTo: decodeURIComponent(returnUrl) }
+                : {};
             // this will redirect the user to Discord's OAuth flow
             await signIn("discord", options);
         } catch (error) {
@@ -43,19 +52,50 @@
         }
     }
 
-    async function handleRedditLogin() {
-        try {
-            const options = returnUrl ? { redirectTo: decodeURIComponent(returnUrl) } : {};
-            // this will redirect the user to Reddit's OAuth flow
-            await signIn("reddit", options);
-        } catch (error) {
-            console.error("Reddit sign-in failed", error);
-        }
-    }
-    
+    // async function handleRedditLogin() {
+    //     try {
+    //         const options = returnUrl
+    //             ? { redirectTo: decodeURIComponent(returnUrl) }
+    //             : {};
+    //         // this will redirect the user to Reddit's OAuth flow
+    //         await signIn("reddit", options);
+    //     } catch (error) {
+    //         console.error("Reddit sign-in failed", error);
+    //     }
+    // }
+
+    // async function handlePasskeyLogin() {
+    //     try {
+    //         console.log("Attempting passkey login...");
+    //         const options = returnUrl
+    //             ? { redirectTo: decodeURIComponent(returnUrl) }
+    //             : {};
+    //         // Sign in with existing passkey
+    //         await signIn("passkey", options);
+    //     } catch (error) {
+    //         console.error("Passkey sign-in failed", error);
+    //     }
+    // }
+
+    // async function handlePasskeyRegister() {
+    //     try {
+    //         console.log("Attempting passkey registration...");
+    //         const options = {
+    //             action: "register",
+    //             ...(returnUrl
+    //                 ? { redirectTo: decodeURIComponent(returnUrl) }
+    //                 : {}),
+    //         };
+    //         // Register new passkey
+    //         await signIn("passkey", options);
+    //     } catch (error) {
+    //         console.error("Passkey registration failed", error);
+    //     }
+    // }
 </script>
 
 <div class="flex h-screen w-full items-center justify-center px-4">
+    <ModeWatcher />
     <Card.Root class="mx-auto w-full max-w-sm">
         <Card.Header>
             <Card.Title class="text-2xl">{m.login_title()}</Card.Title>
@@ -102,7 +142,7 @@
                     </svg>
                     {m.login_with({ provider: "Discord" })}
                 </Button>
-                <Button
+                <!-- <Button
                     variant="outline"
                     class="w-full"
                     onclick={handleRedditLogin}
@@ -114,7 +154,46 @@
                         />
                     </svg>
                     {m.login_with({ provider: "Reddit" })}
-                </Button>
+                </Button> -->
+                <!-- {#if !isAuthenticated} -->
+                    <!-- User is logged in, show register button -->
+                    <!-- <Button
+                        variant="outline"
+                        class="w-full"
+                        onclick={handlePasskeyRegister}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            class="w-4 h-4 mr-2"
+                        >
+                            <path
+                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+                                fill="currentColor"
+                            />
+                        </svg>
+                        Register new Passkey
+                    </Button>
+                {:else} -->
+                    <!-- User is not logged in, show login button -->
+                    <!-- <Button
+                        variant="outline"
+                        class="w-full"
+                        onclick={handlePasskeyLogin}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            class="w-4 h-4 mr-2"
+                        >
+                            <path
+                                d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
+                                fill="currentColor"
+                            />
+                        </svg>
+                        Sign in with Passkey
+                    </Button>
+                {/if} -->
             </div>
             <div class="mt-4 text-center text-sm">
                 {m.dont_have_an_account()}

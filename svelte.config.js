@@ -16,6 +16,7 @@ const config = {
             $utils: path.resolve("src/lib/utils"),
             $ui: path.resolve("src/lib/components/ui"),
             $hooks: path.resolve("src/lib/hooks"),
+            $paraglide: path.resolve("src/paraglide")
         },
         // adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
         // If your environment is not supported, or you settled on a specific environment, switch out the adapter.

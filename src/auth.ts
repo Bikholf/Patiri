@@ -7,6 +7,7 @@ import { GITHUB_CLIENT_SECRET, GITHUB_CLIENT_ID, GOOGLE_CLIENT_ID, GOOGLE_CLIENT
 import Google from "@auth/sveltekit/providers/google"
 import Discord from "@auth/sveltekit/providers/discord"
 import Reddit from "@auth/sveltekit/providers/reddit"
+import Passkey from "@auth/sveltekit/providers/passkey"
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
     adapter: DrizzleAdapter(db),
@@ -27,5 +28,19 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
             clientId: REDDIT_CLIENT_ID,
             clientSecret: REDDIT_CLIENT_SECRET
         }),
-    ]
+        // Passkey
+    ],
+    pages: {
+        signIn: "/login",
+    },
+    // trustHost: true, // Für Development
+    // experimental: { enableWebAuthn: true },
+    // callbacks: {
+    //     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+    //         // Erlaubt relative URLs oder URLs von derselben Origin
+    //         if (url.startsWith("/")) return `${baseUrl}${url}`;
+    //         if (new URL(url).origin === baseUrl) return url;
+    //         return baseUrl;
+    //     }
+    // }
 })

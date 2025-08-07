@@ -8,6 +8,7 @@
     import { Button } from "$lib/components/ui/button/index.js";
     import { setLocale, getLocale } from "../paraglide/runtime.js";
     import * as m from "../paraglide/messages.js";
+    import { Separator } from "$lib/components/ui/separator/index.js";
 
     import SunIcon from "@lucide/svelte/icons/sun";
     import MoonIcon from "@lucide/svelte/icons/moon";
@@ -22,19 +23,12 @@
 {#if ($page.url.pathname as string) !== "/login" && ($page.url.pathname as string) !== "/register"}
     <Sidebar.Provider>
         <AppSidebar />
-        <main>
-            <Sidebar.Trigger />
-            <AppBreadcrumbs />
-            <Button onclick={toggleMode} variant="outline" size="icon">
-                <SunIcon
-                    class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 !transition-all dark:-rotate-90 dark:scale-0"
-                />
-                <MoonIcon
-                    class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 !transition-all dark:rotate-0 dark:scale-100"
-                />
-                <span class="sr-only">Toggle theme</span>
-            </Button>
-            <ModeWatcher />
+        <main class="p-2">
+            <div class="flex items-center gap-2">
+                <Sidebar.Trigger  class="-ml-1"  />
+                <Separator orientation="vertical" class="mr-2 data-[orientation=vertical]:h-4" />
+                <AppBreadcrumbs />
+            </div>
             {@render children?.()}
         </main>
     </Sidebar.Provider>

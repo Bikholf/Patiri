@@ -69,6 +69,8 @@
 	"dependencies": {
 		"@auth/drizzle-adapter": "^1.10.0",
 		"@auth/sveltekit": "^1.10.0",
+		"@simplewebauthn/browser": "^9.0.1",
+		"@simplewebauthn/server": "^9.0.3",
 		"arctic": "^3.7.0",
 		"dotenv": "^17.2.1",
 		"drizzle-orm": "^0.40.1",

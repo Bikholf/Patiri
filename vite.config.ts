@@ -4,26 +4,27 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [
-		tailwindcss(),
-		paraglideVitePlugin({
-			project: './project.inlang',
-			outdir: './src/paraglide'
-		}),
-		sveltekit()
-	],
-	server: {
-		fs: {
-			strict: false
-		}
-	},
-	optimizeDeps: {
-		exclude: ['@auth/sveltekit', '@auth/core', '@auth/drizzle-adapter']
-	},
-	ssr: {
-		noExternal: []
-	},
-	define: {
-		global: 'globalThis'
-	}
+    plugins: [
+        tailwindcss(),
+        paraglideVitePlugin({
+            project: './project.inlang',
+            outdir: './src/paraglide',
+            strategy: ["cookie", "baseLocale"],
+        }),
+        sveltekit()
+    ],
+    server: {
+        fs: {
+            strict: false
+        }
+    },
+    optimizeDeps: {
+        exclude: ['@auth/sveltekit', '@auth/core', '@auth/drizzle-adapter']
+    },
+    ssr: {
+        noExternal: []
+    },
+    define: {
+        global: 'globalThis'
+    }
 });
