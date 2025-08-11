@@ -101,3 +101,73 @@ export const authenticators = pgTable(
         },
     ]
 )
+
+export const groups = pgTable(
+    "group",
+    {
+        id: text("id")
+            .primaryKey()
+            .notNull()
+            .$defaultFn(() => crypto.randomUUID()),
+        name: text("name").notNull(),
+        slug: text("slug").unique(), // Für URLs wie /groups/my-group
+        description: text("description"),
+        maxMembers: integer("maxMembers"),
+        createdBy: text("createdBy")
+            .notNull()
+            .references(() => users.id),
+        createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+        updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+    }
+)
+
+export const members = pgTable(
+    "member",
+    {
+        userId: text("userId")
+            .notNull()
+            .references(() => users.id, { onDelete: "cascade" }),
+        groupId: text("groupId")
+            .notNull()
+            .references(() => groups.id, { onDelete: "cascade" }),
+        role: text("role").default("member"), // z.B. "admin", "moderator", "member"
+        joinedAt: timestamp("joinedAt", { mode: "date" }).notNull().defaultNow(),
+        isActive: boolean("isActive").notNull().default(true),
+    },
+    (member) => [
+        {
+            compositePk: primaryKey({
+                columns: [member.userId, member.groupId],
+            }),
+        },
+    ]
+)
+
+import { relations } from "drizzle-orm";
+
+// ...existing tables...
+
+// Relations definieren
+export const usersRelations = relations(users, ({ many }) => ({
+    memberships: many(members),
+    createdGroups: many(groups),
+}));
+
+export const groupsRelations = relations(groups, ({ one, many }) => ({
+    creator: one(users, {
+        fields: [groups.createdBy],
+        references: [users.id],
+    }),
+    members: many(members),
+}));
+
+export const membersRelations = relations(members, ({ one }) => ({
+    user: one(users, {
+        fields: [members.userId],
+        references: [users.id],
+    }),
+    group: one(groups, {
+        fields: [members.groupId],
+        references: [groups.id],
+    }),
+}));

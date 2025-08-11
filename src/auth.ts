@@ -9,6 +9,9 @@ import Discord from "@auth/sveltekit/providers/discord"
 import Reddit from "@auth/sveltekit/providers/reddit"
 import Passkey from "@auth/sveltekit/providers/passkey"
 
+import type { Session, User } from "@auth/core/types"
+import type { JWT } from "@auth/core/jwt"
+
 export const { handle, signIn, signOut } = SvelteKitAuth({
     adapter: DrizzleAdapter(db),
     providers: [
@@ -33,14 +36,45 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     pages: {
         signIn: "/login",
     },
-    // trustHost: true, // Für Development
+
     // experimental: { enableWebAuthn: true },
-    // callbacks: {
-    //     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-    //         // Erlaubt relative URLs oder URLs von derselben Origin
-    //         if (url.startsWith("/")) return `${baseUrl}${url}`;
-    //         if (new URL(url).origin === baseUrl) return url;
-    //         return baseUrl;
-    //     }
-    // }
+    callbacks: {
+        // ✅ Session-Callback: User-ID zur Session hinzufügen
+        async session({ session, token, user }: { session: Session; token: JWT; user: User | undefined }) {
+            console.log("Session callback triggered");
+            console.log("Token:", token);
+            console.log("User:", user);
+            console.log("Session before:", session);
+
+            // User-ID zur Session hinzufügen
+            if (token?.sub && session?.user) {
+                session.user.id = token.sub;
+            }
+
+            console.log("Session after:", session);
+            return session;
+        },
+
+        // ✅ JWT-Callback: User-ID im Token speichern
+        async jwt(
+            { token, user, account }: { token: JWT; user?: User; account?: any }
+        ): Promise<JWT> {
+            console.log("JWT callback triggered");
+            console.log("Token:", token);
+            console.log("User:", user);
+            console.log("Account:", account);
+
+            // Bei erster Anmeldung die User-ID im Token speichern
+            if (user) {
+                token.sub = user.id;
+            }
+
+            return token;
+        }
+    },
+
+    // ✅ Session-Strategie für JWT
+    session: {
+        strategy: "jwt"
+    }
 })

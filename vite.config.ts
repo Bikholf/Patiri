@@ -16,7 +16,8 @@ export default defineConfig({
     server: {
         fs: {
             strict: false
-        }
+        },
+        open: false  // Deaktiviert automatisches Öffnen des Browsers
     },
     optimizeDeps: {
         exclude: ['@auth/sveltekit', '@auth/core', '@auth/drizzle-adapter']

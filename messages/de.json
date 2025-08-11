@@ -17,5 +17,12 @@
     "dark_mode": "Dunkles Design",
     "light_mode": "Helles Design",
     "system_mode": "Systemmodus",
-    "notifications": "Benachrichtigungen"
+    "notifications": "Benachrichtigungen",
+    "breadcrumb_home": "Startseite",
+    "breadcrumb_groups": "Gruppen",
+    "breadcrumb_media": "Medien",
+    "breadcrumb_settings": "Einstellungen",
+    "breadcrumb_profile": "Profil",
+    "breadcrumb_members": "Mitglieder",
+    "breadcrumb_admin": "Verwaltung"
 }

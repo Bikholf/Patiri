@@ -17,5 +17,12 @@
     "dark_mode": "Dark Mode",
     "light_mode": "Light Mode",
     "system_mode": "System Mode",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "breadcrumb_home": "Home",
+    "breadcrumb_groups": "Groups",
+    "breadcrumb_media": "Media",
+    "breadcrumb_settings": "Settings",
+    "breadcrumb_profile": "Profile",
+    "breadcrumb_members": "Members",
+    "breadcrumb_admin": "Administration"
 }

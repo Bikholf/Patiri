@@ -8,6 +8,7 @@
     import NavUser from "./app-navuser.svelte";
     import CompassIcon from "@lucide/svelte/icons/compass";
     import LoginIcon from "@lucide/svelte/icons/log-in";
+    import GroupsIcon from "@lucide/svelte/icons/group";
     import Button from "./ui/button/button.svelte";
     import { ModeWatcher, toggleMode } from "mode-watcher";
     import { setLocale, getLocale } from "$paraglide/runtime.js";
@@ -16,7 +17,7 @@
     import SunIcon from "@lucide/svelte/icons/sun";
     import MoonIcon from "@lucide/svelte/icons/moon";
 
-    let { children } = $props();
+    let { children = undefined } = $props();
 
     function setLang(newLang: "en" | "de") {
         setLocale(newLang);
@@ -56,6 +57,11 @@
             title: "Settings",
             url: "/settings",
             icon: SettingsIcon,
+        },
+        {
+            title: "Groups",
+            url: "/groups",
+            icon: GroupsIcon,
         },
         {
             title: "Login",
