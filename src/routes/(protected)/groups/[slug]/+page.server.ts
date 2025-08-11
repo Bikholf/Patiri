@@ -1,25 +1,36 @@
 import type { PageServerLoad } from './$types.js';
-import { getUserGroups } from '$db/queries/groups.js';
+import { getUserGroups } from '$lib/server/db/queries/groups.js';
+import { redirect } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ params, locals }) => {
-    const session = await locals.auth();
+export const load: PageServerLoad = async (event) => {
+    await event.parent();
+    const session = await event.locals.auth();
 
-    const userGroups = await getUserGroups(locals.user.id);
+    console.log("=== Session Debug ===");
+    console.log("Full session:", JSON.stringify(session, null, 2));
+    
+    // ✅ Robuste Validierung
+    if (!session?.user?.id) {
+        console.log("No user ID in session - redirecting to login");
+        throw redirect(302, '/login');
+    }
+
+    const userId = session.user.id;
+    
+    console.log("Valid user id: ", userId);
+    
+    const userGroups = await getUserGroups(userId);
+    
+    console.log("user groups: ", userGroups);
     
     return {
         session,
-        user: session?.user,
-        title: `Gruppe: ${params.slug}`,
-        content: `<p>Willkommen in der Gruppe <strong>${params.slug}</strong></p>`,
-        // Breadcrumb-Konfiguration für diese Route
+        user: session.user,
         breadcrumbConfig: [
             {
-                translationKey: 'breadcrumb_groups'  // /groups
-            },
-            {
-                label: params.slug  // /groups/[slug] - Verwende Parameter-Wert
+                translationKey: 'breadcrumb_groups'
             }
         ],
-        userGroups: userGroups
+        userGroups: userGroups?.memberships || []
     };
 };

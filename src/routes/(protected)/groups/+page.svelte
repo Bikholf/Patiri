@@ -6,4 +6,9 @@
     console.log("group data: ", data.userGroups)
 </script>
 
-<h1>{data.userGroups[0].group.name}</h1>
+<h1>Groups list</h1>
+<ul>
+	{#each data.userGroups as group}
+		<li>{group.group.name}</li>
+	{/each}
+</ul>

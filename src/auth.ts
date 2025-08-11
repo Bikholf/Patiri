@@ -39,42 +39,23 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 
     // experimental: { enableWebAuthn: true },
     callbacks: {
-        // ✅ Session-Callback: User-ID zur Session hinzufügen
-        async session({ session, token, user }: { session: Session; token: JWT; user: User | undefined }) {
-            console.log("Session callback triggered");
-            console.log("Token:", token);
-            console.log("User:", user);
+        async session({ session, user }: { session: Session; user: User }): Promise<Session> {
+            console.log("Database session callback");
+            console.log("User from DB:", user);
             console.log("Session before:", session);
-
-            // User-ID zur Session hinzufügen
-            if (token?.sub && session?.user) {
-                session.user.id = token.sub;
+            
+            // Bei Database Strategy ist user das User-Objekt aus der DB
+            if (user && session?.user && user.id) {
+                session.user.id = user.id;
             }
-
+            
             console.log("Session after:", session);
             return session;
-        },
-
-        // ✅ JWT-Callback: User-ID im Token speichern
-        async jwt(
-            { token, user, account }: { token: JWT; user?: User; account?: any }
-        ): Promise<JWT> {
-            console.log("JWT callback triggered");
-            console.log("Token:", token);
-            console.log("User:", user);
-            console.log("Account:", account);
-
-            // Bei erster Anmeldung die User-ID im Token speichern
-            if (user) {
-                token.sub = user.id;
-            }
-
-            return token;
         }
     },
-
-    // ✅ Session-Strategie für JWT
+    
+    // ✅ Database Session Strategy
     session: {
-        strategy: "jwt"
+        strategy: "database"
     }
 })
