@@ -46,6 +46,7 @@
 		"@sveltejs/package": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^6.0.0",
 		"@tailwindcss/vite": "^4.0.0",
+		"@tanstack/table-core": "^8.21.3",
 		"@types/node": "^22",
 		"@types/pg": "^8.15.5",
 		"bits-ui": "^2.8.12",
