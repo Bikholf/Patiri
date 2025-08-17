@@ -24,5 +24,10 @@
     "breadcrumb_settings": "Settings",
     "breadcrumb_profile": "Profile",
     "breadcrumb_members": "Members",
-    "breadcrumb_admin": "Administration"
+    "breadcrumb_admin": "Administration",
+    "groups": "Groups",
+    "delete": "Delete",
+    "view": "View",
+    "actions": "Actions",
+    "leave_group": "Leave Group"
 }

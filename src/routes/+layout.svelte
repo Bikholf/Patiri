@@ -23,15 +23,16 @@
 {#if ($page.url.pathname as string) !== "/login" && ($page.url.pathname as string) !== "/register"}
     <Sidebar.Provider>
         <AppSidebar />
-        <main class="p-2">
-            <div class="flex items-center gap-2">
-                <Sidebar.Trigger  class="-ml-1"  />
+        <main class="w-full">
+            <div class="flex items-center gap-2 p-2">
+                <Sidebar.Trigger  class="-ml-1 pl-2"  />
                 <Separator orientation="vertical" class="mr-2 data-[orientation=vertical]:h-4" />
                 <AppBreadcrumbs />
             </div>
-            {@render children?.()}
+            <Separator orientation="horizontal" class="mr-2 data-[orientation=vertical]:h-4" />
+            <div class="w-full p-2">{@render children?.()}</div>
         </main>
     </Sidebar.Provider>
 {:else}
-    {@render children?.()}
+    <div class="w-full m-4">{@render children?.()}</div>
 {/if}

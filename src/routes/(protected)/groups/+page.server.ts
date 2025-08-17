@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types.js';
-import { getUserGroups } from '$db/queries/groups.js';
+import { getAllUserGroupsWithCreator, getUserGroups } from '$db/queries/groups.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async (event) => {
@@ -15,7 +15,7 @@ export const load: PageServerLoad = async (event) => {
     console.log("user id: ", userId);
     console.log("user id: ", session.user);
     
-    const userGroups = await getUserGroups(userId);
+    const userGroups = await getAllUserGroupsWithCreator();
     
     console.log("user groups: ", userGroups);
     

@@ -48,3 +48,20 @@ export async function getUserGroupsWithCreator(userId: string) {
         }
     });
 }
+
+// Mit Creator-Informationen
+export async function getAllUserGroupsWithCreator() {
+    return await db.query.users.findFirst({
+        with: {
+            memberships: {
+                with: {
+                    group: {
+                        with: {
+                            creator: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
