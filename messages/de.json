@@ -18,7 +18,7 @@
     "light_mode": "Helles Design",
     "system_mode": "Systemmodus",
     "notifications": "Benachrichtigungen",
-    "breadcrumb_home": "Startseite",
+    "breadcrumb_home": "Home",
     "breadcrumb_groups": "Gruppen",
     "breadcrumb_media": "Medien",
     "breadcrumb_settings": "Einstellungen",
@@ -29,5 +29,10 @@
     "delete": "Löschen",
     "view": "Anzeigen",
     "actions": "Aktionen",
-    "leave_group": "Gruppe verlassen"
+    "leave_group": "Gruppe verlassen",
+    "add": "Hinzufügen",
+    "no_group_chosen": "Keine Gruppe ausgewählt",
+    "name": "Name",
+    "create_group": "Gruppe erstellen",
+    "create_group_desc": "Erstelle eine neue Gruppe."
 }

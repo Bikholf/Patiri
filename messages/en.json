@@ -29,5 +29,10 @@
     "delete": "Delete",
     "view": "View",
     "actions": "Actions",
-    "leave_group": "Leave Group"
+    "leave_group": "Leave Group",
+    "add": "Add",
+    "no_group_chosen": "No group chosen",
+    "name": "Name",
+    "create_group": "Create Group",
+    "create_group_desc": "Create a new group."
 }

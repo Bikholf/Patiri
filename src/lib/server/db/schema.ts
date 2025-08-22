@@ -144,6 +144,7 @@ export const members = pgTable(
 )
 
 import { relations } from "drizzle-orm";
+import { group } from "console"
 
 // ...existing tables...
 

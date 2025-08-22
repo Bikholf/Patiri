@@ -7,7 +7,7 @@
     import { ModeWatcher, toggleMode } from "mode-watcher";
     import { Button } from "$lib/components/ui/button/index.js";
     import { setLocale, getLocale } from "../paraglide/runtime.js";
-    import * as m from "../paraglide/messages.js";
+    import * as m from "$paraglide/messages.js";
     import { Separator } from "$lib/components/ui/separator/index.js";
 
     import SunIcon from "@lucide/svelte/icons/sun";

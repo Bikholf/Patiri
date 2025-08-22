@@ -3,7 +3,7 @@
     import * as Card from "$lib/components/ui/card/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
-    import * as m from "../../paraglide/messages.js";
+    import * as m from "$paraglide/messages.js";
     import { signIn } from "@auth/sveltekit/client";
     import type { PageProps } from "./$types.js";
     import { page } from "$app/state";
