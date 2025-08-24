@@ -8,6 +8,7 @@
     import * as Form from "$lib/components/ui/form/index.js";
     import AddIcon from "@lucide/svelte/icons/plus";
     import { getLocale } from "$paraglide/runtime.js";
+    import Loader2Icon from "@lucide/svelte/icons/loader-2";
 
     let { data } = $props();
 
@@ -18,10 +19,12 @@
             if (result.type === 'success') {
                 isOpen = false;
             }
-        }
+        },
+        delayMs: 500,
+        timeoutMs: 8000
     });
 
-    const { form: formData, enhance } = form;
+    const { form: formData, enhance, delayed, submitting } = form;
 
     let isOpen = $state(false);
 
@@ -86,8 +89,13 @@
                     class="cursor-pointer"
                     type="submit"
                     variant="outline"
+                    disabled={$submitting === true}
                 >
-                    {m.create_group()}
+                    {#if $delayed === true}
+                        <Loader2Icon class="animate-spin" />
+                    {:else}
+                        {m.create_group()}
+                    {/if}
                 </Form.Button>
             </Dialog.Footer>
         </form>

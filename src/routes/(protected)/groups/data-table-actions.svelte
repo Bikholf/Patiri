@@ -6,7 +6,7 @@
     import DeleteIcon from "@lucide/svelte/icons/trash-2";
     import EyeIcon from "@lucide/svelte/icons/eye";
     import LogOutIcon from "@lucide/svelte/icons/log-out";
-    import EditGroupForm from "./edit-group-form.svelte";
+    import EditGroupForm from "./edit-group-dialog.svelte";
     import SquarePenIcon from "@lucide/svelte/icons/square-pen";
 
     let { groupData, groupForm } = $props();

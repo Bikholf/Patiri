@@ -16,7 +16,7 @@ export const groupSchema = object({
     id: optional(string()), // <-- optionales id-Feld (z.B. UUID/string)
     name: pipe(
         string(),
-        minLength(2),
+        minLength(3),
         maxLength(100)
     ),
     description: pipe(

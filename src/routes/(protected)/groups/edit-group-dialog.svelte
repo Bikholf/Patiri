@@ -9,8 +9,9 @@
     import AddIcon from "@lucide/svelte/icons/plus";
     import { getLocale } from "$paraglide/runtime.js";
     import SquarePenIcon from "@lucide/svelte/icons/square-pen";
-    import type { Group } from "$lib/types.js";
+import type { Group } from "$lib/interfaces/group.js";
     import { is } from "drizzle-orm";
+    import Loader2Icon from "@lucide/svelte/icons/loader-2";
 
     // Empfange das superForm-Objekt und die Daten der Gruppe
 
@@ -23,17 +24,18 @@
         id: groupData?.id ?? "",
     },
     {
-
         onResult({ result }: { result: any }) {
             console.log("Form result: ", result);
             // Prüfe, ob das Ergebnis erfolgreich war
             if (result.type === 'success') {
                 isOpen = false;
             }
-        }
+        },
+        delayMs: 500,
+        timeoutMs: 8000
     });
 
-    const { form: formData, enhance, form } = editGroupForm;
+    const { form: formData, enhance, form, delayed, submitting } = editGroupForm;
 
     // Initialisiere die superForm-Daten
     $effect(() => {
@@ -112,8 +114,13 @@
                     class="cursor-pointer"
                     type="submit"
                     variant="outline"
+                    disabled={$submitting === true}
                 >
-                    {m.save_changes()}
+                    {#if $delayed === true}
+                         <Loader2Icon class="animate-spin" />
+                    {:else}
+                        {m.save_changes()}
+                    {/if}
                 </Form.Button>
             </Dialog.Footer>
         </form>

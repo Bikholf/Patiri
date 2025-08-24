@@ -5,21 +5,9 @@ import { getLocale } from "$paraglide/runtime.js";
 import DataTableActions from "./data-table-actions.svelte";
 import * as m from "$paraglide/messages.js";
 import type { SuperForm } from "sveltekit-superforms";
-
-export type Group = {
-    id: string;
-    name: string,
-    slug: string,
-    description: string,
-    maxMembers: number,
-    createdBy: string,
-    createdAt: string,
-    updatedAt: string,
-    actions: any
-};
-
 import type { GroupSchema, groupSchema } from "$db/form-schemas.js";
 import type { InferInput } from "valibot";
+import type { Group } from "$lib/interfaces/group.js";
 
 // Mache columns zu einer Funktion, die das Formular-Objekt akzeptiert
 export const columns = (groupForm: SuperForm<Group>): ColumnDef<Group>[] => [

@@ -3,8 +3,8 @@
     import { columns } from "./columns.js";
     import * as Card from "$lib/components/ui/card/index.js";
     import * as m from "$paraglide/messages.js";
-    import type { Group } from "$lib/types.ts";
-    import CreateGroupForm from "./create-group-form.svelte";
+    import type { Group } from "$lib/interfaces/group.js";
+    import CreateGroupForm from "./create-group-dialog.svelte";
     import { superForm } from "sveltekit-superforms";
     import * as Resizable from "$lib/components/ui/resizable/index.js";
 
@@ -12,9 +12,14 @@
     console.log("group data: ", data.userGroups);
     console.log("group form: ", data.groupForm);
 
-    let selectedGroup: Group | null = null;
+    let selectedGroup: Group | null = $state(null);
 
     const createGroupForm = superForm(data.groupForm);
+
+    function setGroup(newSelectedGroup: any) {
+        console.log("Selected group: ", newSelectedGroup);
+        selectedGroup = newSelectedGroup;
+    }
 </script>
 
 <Resizable.PaneGroup direction="horizontal" class="w-full flex gap-2">
@@ -50,6 +55,8 @@
                         };
                     })}
                     columns={columns(createGroupForm as any)}
+                    {setGroup}
+                    {selectedGroup}
                 />
             </Card.Content>
         </Card.Root>
@@ -59,7 +66,10 @@
         <Card.Root class="flex-1/2">
             {#if selectedGroup}
                 <Card.Header>
-                    <Card.Title>{m.groups()}</Card.Title>
+                    <Card.Title>{selectedGroup.name}</Card.Title>
+                    <Card.Description>
+                        {selectedGroup.description}
+                    </Card.Description>
                 </Card.Header>
                 <Card.Content></Card.Content>
             {:else}

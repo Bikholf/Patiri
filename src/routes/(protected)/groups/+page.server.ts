@@ -121,9 +121,11 @@ export const actions: Actions = {
         };
 
         try {
-            const updated = await updateGroup(String(groupId), updateData);
-            console.log('[update] db update result:', updated);
-            return message(form, 'Group updated successfully!');
+            setTimeout(async () => {
+                const updated = await updateGroup(String(groupId), updateData);
+                console.log('[update] db update result:', updated);
+                return message(form, 'Group updated successfully!');
+            }, 5000);
         } catch (err) {
             console.error('[update] DB update error:', err);
             return fail(500, { form, message: 'Database update failed', error: String(err) });
