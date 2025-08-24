@@ -3,7 +3,8 @@ import type { ColumnDef } from "@tanstack/table-core";
 import { createRawSnippet } from "svelte";
 import { getLocale } from "$paraglide/runtime.js";
 import DataTableActions from "./data-table-actions.svelte";
-import { m } from "../../../paraglide/messages.js";
+import * as m from "$paraglide/messages.js";
+import type { SuperForm } from "sveltekit-superforms";
 
 export type Group = {
     id: string;
@@ -17,29 +18,56 @@ export type Group = {
     actions: any
 };
 
-export const columns: ColumnDef<Group>[] = [
+import type { GroupSchema, groupSchema } from "$db/form-schemas.js";
+import type { InferInput } from "valibot";
+
+// Mache columns zu einer Funktion, die das Formular-Objekt akzeptiert
+export const columns = (groupForm: SuperForm<Group>): ColumnDef<Group>[] => [
     {
         accessorKey: "name",
         header: () => {
+            const localizedName = m.name()
             const amountHeaderSnippet = createRawSnippet(() => ({
-                render: () => `<div>Name</div>`,
+                render: () => `<div class="pl-2">${localizedName}</div>`,
+            }));
+            return renderSnippet(amountHeaderSnippet, "");
+        },
+        cell: ({ row }) => {
+            const amountCellSnippet = createRawSnippet<[string]>(() => {
+                const nameValue = row.getValue("name")
+                return {
+                    render: () => `<div class="pl-2">${nameValue}</div>`,
+                };
+            });
+            return renderSnippet(amountCellSnippet, "");
+        }
+    },
+    {
+        accessorKey: "description",
+        header: () => {
+            const localizedName = m.description()
+            const amountHeaderSnippet = createRawSnippet(() => ({
+                render: () => `<div>${localizedName}</div>`,
             }));
             return renderSnippet(amountHeaderSnippet, "");
         },
     },
     {
-        accessorKey: "description",
-        header: "Description",
-    },
-    {
         accessorKey: "creator.name",
-        header: "Created By",
+        header: () => {
+            const localizedName = m.created_by()
+            const amountHeaderSnippet = createRawSnippet(() => ({
+                render: () => `<div>${localizedName}</div>`,
+            }));
+            return renderSnippet(amountHeaderSnippet, "");
+        },
     },
     {
         accessorKey: "createdAt",
         header: () => {
+            const localizedName = m.created_at()
             const dateHeaderSnippet = createRawSnippet(() => ({
-                render: () => `<div class="text-right">Created At</div>`,
+                render: () => `<div class="text-right">${localizedName}</div>`,
             }));
             return renderSnippet(dateHeaderSnippet, "");
         },
@@ -69,8 +97,8 @@ export const columns: ColumnDef<Group>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            // You can pass whatever you need from `row.original` to the component
-            return renderComponent(DataTableActions, { id: row.original.id });
+            // Übergib sowohl die Zeilendaten als auch das Formular-Objekt
+            return renderComponent(DataTableActions, { groupData: row.original, groupForm });
         },
     }
 ];

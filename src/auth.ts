@@ -40,16 +40,16 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     // experimental: { enableWebAuthn: true },
     callbacks: {
         async session({ session, user }: { session: Session; user: User }): Promise<Session> {
-            console.log("Database session callback");
-            console.log("User from DB:", user);
-            console.log("Session before:", session);
+            // console.log("Database session callback");
+            // console.log("User from DB:", user);
+            // console.log("Session before:", session);
             
             // Bei Database Strategy ist user das User-Objekt aus der DB
             if (user && session?.user && user.id) {
                 session.user.id = user.id;
             }
             
-            console.log("Session after:", session);
+            // console.log("Session after:", session);
             return session;
         }
     },

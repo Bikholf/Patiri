@@ -110,7 +110,6 @@ export const groups = pgTable(
             .notNull()
             .$defaultFn(() => crypto.randomUUID()),
         name: text("name").notNull(),
-        slug: text("slug").unique(), // Für URLs wie /groups/my-group
         description: text("description"),
         maxMembers: integer("maxMembers"),
         createdBy: text("createdBy")
@@ -132,7 +131,6 @@ export const members = pgTable(
             .references(() => groups.id, { onDelete: "cascade" }),
         role: text("role").default("member"), // z.B. "admin", "moderator", "member"
         joinedAt: timestamp("joinedAt", { mode: "date" }).notNull().defaultNow(),
-        isActive: boolean("isActive").notNull().default(true),
     },
     (member) => [
         {

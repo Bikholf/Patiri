@@ -34,5 +34,24 @@
     "no_group_chosen": "No group chosen",
     "name": "Name",
     "create_group": "Create Group",
-    "create_group_desc": "Create a new group."
+    "create_group_desc": "Create a new group.",
+    "description": "Description",
+    "group_creation": {
+        "name": {
+            "hint": "Give your group a name.",
+            "placeholder": "e.g. Spain Vacation"
+        },
+        "description": {
+            "hint": "Give your group a description.",
+            "placeholder": "e.g. For the vacation in Spain with the boys."
+        }
+    },
+    "max_x_characters": "Max. {x} characters.",
+    "min_x_characters": "Min. {x} characters.",
+    "required_field": "Required field.",
+    "optional_field": "Optional field.",
+    "edit": "Edit",
+    "save_changes": "Save Changes",
+    "created_by": "Created by",
+    "created_at": "Created at"
 }

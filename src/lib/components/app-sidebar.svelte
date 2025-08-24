@@ -18,6 +18,7 @@
     import MoonIcon from "@lucide/svelte/icons/moon";
 
     let { children = undefined } = $props();
+    
 
     function setLang(newLang: "en" | "de") {
         setLocale(newLang);

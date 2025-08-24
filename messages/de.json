@@ -34,5 +34,24 @@
     "no_group_chosen": "Keine Gruppe ausgewählt",
     "name": "Name",
     "create_group": "Gruppe erstellen",
-    "create_group_desc": "Erstelle eine neue Gruppe."
+    "create_group_desc": "Erstelle eine neue Gruppe.",
+    "description": "Beschreibung",
+    "group_creation": {
+        "name": {
+            "hint": "Gib deiner Gruppe einen Namen.",
+            "placeholder": "z.B. Spanien Urlaub"
+        },
+        "description": {
+            "hint": "Gib deiner Gruppe eine Beschreibung.",
+            "placeholder": "z.B. Für den Urlaub in Spanien mit den Boys."
+        }
+    },
+    "max_x_characters": "Max. {x} Zeichen.",
+    "min_x_characters": "Min. {x} Zeichen.",
+    "required_field": "Pflichtfeld.",
+    "optional_field": "Optional.",
+    "edit": "Bearbeiten",
+    "save_changes": "Änderungen speichern",
+    "created_by": "Erstellt von",
+    "created_at": "Erstellt am"
 }
