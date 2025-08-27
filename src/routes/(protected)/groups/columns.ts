@@ -30,16 +30,16 @@ export const columns = (groupForm: SuperForm<Group>): ColumnDef<Group>[] => [
             return renderSnippet(amountCellSnippet, "");
         }
     },
-    {
-        accessorKey: "description",
-        header: () => {
-            const localizedName = m.description()
-            const amountHeaderSnippet = createRawSnippet(() => ({
-                render: () => `<div>${localizedName}</div>`,
-            }));
-            return renderSnippet(amountHeaderSnippet, "");
-        },
-    },
+    // {
+    //     accessorKey: "description",
+    //     header: () => {
+    //         const localizedName = m.description()
+    //         const amountHeaderSnippet = createRawSnippet(() => ({
+    //             render: () => `<div>${localizedName}</div>`,
+    //         }));
+    //         return renderSnippet(amountHeaderSnippet, "");
+    //     },
+    // },
     {
         accessorKey: "creator.name",
         header: () => {

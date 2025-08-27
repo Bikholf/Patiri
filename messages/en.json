@@ -53,5 +53,10 @@
     "edit": "Edit",
     "save_changes": "Save Changes",
     "created_by": "Created by",
-    "created_at": "Created at"
+    "created_at": "Created at",
+    "edit_group": "Edit Group",
+    "edit_group_description": "Edit the group.",
+    "delete_group": "Delete Group",
+    "delete_group_description": "Delete the group.",
+    "cancel": "Cancel"
 }

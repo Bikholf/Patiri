@@ -59,7 +59,7 @@
                 </Form.Control>
                 <Form.Description>
                     {m.required_field()}
-                    {m.min_x_characters({ x: 2 })}
+                    {m.min_x_characters({ x: 3 })}
                     {m.max_x_characters({ x: 100 })}
                 </Form.Description>
                 <Form.FieldErrors />

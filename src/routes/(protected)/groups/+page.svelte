@@ -22,7 +22,7 @@
     }
 </script>
 
-<Resizable.PaneGroup direction="horizontal" class="w-full flex gap-2">
+<Resizable.PaneGroup direction="horizontal" class="w-full flex gap-2 flex-1">
     <Resizable.Pane defaultSize={50}>
         <Card.Root class="flex-1/2">
             <Card.Header class="flex items-center">

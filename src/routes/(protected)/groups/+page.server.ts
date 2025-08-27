@@ -1,5 +1,5 @@
 import type { PageServerLoad, Actions } from './$types.js';
-import { getAllUserGroupsWithCreator, createGroup, addUserToGroup, getUserGroupsByUserId, updateGroup } from '$db/queries/groups.js';
+import { getAllUserGroupsWithCreator, createGroup, addUserToGroup, getUserGroupsByUserId, updateGroup, deleteGroup } from '$db/queries/groups.js';
 import { redirect, fail } from '@sveltejs/kit';
 // import { groupFormSchema, type GroupFormSchema } from '$db/schema.js';
 
@@ -10,7 +10,7 @@ import { groupSchema } from '$db/form-schemas.js';
 import { message } from 'sveltekit-superforms';
 import { getLocale } from '$paraglide/runtime.js';
 import * as v from 'valibot';
-import '@valibot/i18n/de/schema';
+import '@valibot/i18n/de';
 
 type GroupInput = v.InferInput<typeof groupSchema>;
 
@@ -129,6 +129,48 @@ export const actions: Actions = {
         } catch (err) {
             console.error('[update] DB update error:', err);
             return fail(500, { form, message: 'Database update failed', error: String(err) });
+        }
+    },
+
+    // Update a group
+    delete: async (event) => {
+        const session = await event.locals.auth();
+
+        const lang = getLocale() === 'en' ? 'en' : 'de';
+        v.setGlobalConfig({ lang });
+
+        // validate name/description with the existing schema
+        const form = await superValidate(event, valibot(groupSchema));
+        console.log('validated form:', form);
+
+        // Wenn Validation fehlschlägt
+        if (!form.valid) {
+            console.log("Form not valid!");
+            return fail(400, { form });
+        }
+
+        // Hole groupId: zuerst aus form.data (wenn present), sonst aus raw formData
+        let groupId = form.data?.id;
+        if (!groupId) {
+            const raw = await event.request.formData();
+            const idFromRaw = raw.get('id');
+            if (idFromRaw) groupId = String(idFromRaw);
+        }
+
+        if (!groupId) {
+            console.error('Missing group id for update');
+            return fail(400, { form, message: 'Missing group id' });
+        }
+
+        try {
+            setTimeout(async () => {
+                const deleted = await deleteGroup(String(groupId));
+                console.log('[delete] db delete result:', deleted);
+                return message(form, 'Group deleted successfully!');
+            }, 5000);
+        } catch (err) {
+            console.error('[delete] DB delete error:', err);
+            return fail(500, { form, message: 'Database delete failed', error: String(err) });
         }
     }
 };

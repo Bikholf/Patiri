@@ -21,7 +21,7 @@ export const groupSchema = object({
     ),
     description: pipe(
         optional(string(), ""),
-        maxLength(500, 'Description cannot exceed 500 characters')
+        maxLength(500, 'Description cannot exceed 500 characters'),
     ),  // Beschreibung ist optional und hat eine Max-Länge
 });
 

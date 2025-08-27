@@ -8,25 +8,31 @@
     import LogOutIcon from "@lucide/svelte/icons/log-out";
     import EditGroupForm from "./edit-group-dialog.svelte";
     import SquarePenIcon from "@lucide/svelte/icons/square-pen";
+    import DeleteGroupDialog from "./delete-group-dialog.svelte";
 
     let { groupData, groupForm } = $props();
 
     // The state for opening and closing the dialog
-    let isOpen = $state(false);
+    let isEditOpen = $state(false);
+    let isDeleteOpen = $state(false);
 
-    function openDialog() {
-        isOpen = true;
+    function openEditDialog() {
+        isEditOpen = true;
+    }
+
+    function openDeleteDialog() {
+        isDeleteOpen = true;
     }
 </script>
 
 <DropdownMenu.Root>
-    <DropdownMenu.Trigger>
+    <DropdownMenu.Trigger class="w-[32px]">
         {#snippet child({ props })}
             <Button
                 {...props}
                 variant="ghost"
                 size="icon"
-                class="relative size-8 p-0"
+                class="relative size-8 p-0 cursor-pointer"
             >
                 <span class="sr-only">Open menu</span>
                 <EllipsisIcon />
@@ -39,12 +45,12 @@
             <DropdownMenu.Item>
                 <EyeIcon />{m.view()}
             </DropdownMenu.Item>
-            <DropdownMenu.Item onclick={openDialog}>
+            <DropdownMenu.Item onclick={openEditDialog}>
                 <SquarePenIcon />{m.edit()}
             </DropdownMenu.Item>
         </DropdownMenu.Group>
         <DropdownMenu.Separator />
-        <DropdownMenu.Item class="text-[var(--destructive)]">
+        <DropdownMenu.Item class="text-[var(--destructive)]" onclick={openDeleteDialog}>
             <DeleteIcon color="var(--destructive)" />{m.delete()}
         </DropdownMenu.Item>
         <DropdownMenu.Item class="text-[var(--destructive)]">
@@ -53,4 +59,6 @@
     </DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<EditGroupForm {groupData} {groupForm} bind:isOpen />
+<EditGroupForm {groupData} {groupForm} bind:isOpen={isEditOpen} />
+
+<DeleteGroupDialog {groupData} {groupForm} bind:isOpen={isDeleteOpen} />

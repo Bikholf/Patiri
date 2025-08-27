@@ -86,3 +86,7 @@ export async function addUserToGroup(userId: string, groupId: string, role: stri
         role
     })
 }
+
+export async function deleteGroup(groupId: string) {
+    return await db.delete(groups).where(eq(groups.id, groupId));
+}

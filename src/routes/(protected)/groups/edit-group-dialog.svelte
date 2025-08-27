@@ -57,9 +57,9 @@ import type { Group } from "$lib/interfaces/group.js";
     </Dialog.Trigger> -->
     <Dialog.Content class="sm:max-w-[425px]">
         <Dialog.Header>
-            <Dialog.Title>{m.create_group()}</Dialog.Title>
+            <Dialog.Title>{m.edit_group()}</Dialog.Title>
             <Dialog.Description>
-                {m.create_group_desc()}
+                {m.edit_group_description()}
             </Dialog.Description>
         </Dialog.Header>
         <form
@@ -84,7 +84,7 @@ import type { Group } from "$lib/interfaces/group.js";
                 </Form.Control>
                 <Form.Description>
                     {m.required_field()}
-                    {m.min_x_characters({ x: 2 })}
+                    {m.min_x_characters({ x: 3 })}
                     {m.max_x_characters({ x: 100 })}
                 </Form.Description>
                 <Form.FieldErrors />
