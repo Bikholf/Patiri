@@ -4,9 +4,11 @@
     import * as Card from "$lib/components/ui/card/index.js";
     import * as m from "$paraglide/messages.js";
     import type { Group } from "$lib/interfaces/group.js";
-    import CreateGroupForm from "./create-group-dialog.svelte";
+    import CreateGroupDialog from "$lib/components/dialogs/create-group-dialog.svelte";
     import { superForm } from "sveltekit-superforms";
     import * as Resizable from "$lib/components/ui/resizable/index.js";
+    import { invalidateAll } from "$app/navigation";
+    import InviteToGroupDialog from "$lib/components/dialogs/invite-to-group-dialog.svelte";
 
     let { data } = $props();
     console.log("group data: ", data.userGroups);
@@ -23,15 +25,15 @@
 </script>
 
 <Resizable.PaneGroup direction="horizontal" class="w-full flex gap-2 flex-1">
-    <Resizable.Pane defaultSize={50}>
+    <Resizable.Pane defaultSize={50} maxSize={50} minSize={30}>
         <Card.Root class="flex-1/2">
             <Card.Header class="flex items-center">
                 <Card.Title>
                     {m.groups()}
                 </Card.Title>
                 <span class="flex-1"></span>
-
-                <CreateGroupForm {data} />
+                <!-- svelte-ignore a11y_consider_explicit_label -->
+                <CreateGroupDialog {data} />
                 <!-- <SuperDebug data={$formData} /> -->
             </Card.Header>
             <Card.Content>
@@ -65,11 +67,15 @@
     <Resizable.Pane defaultSize={50}>
         <Card.Root class="flex-1/2">
             {#if selectedGroup}
-                <Card.Header>
-                    <Card.Title>{selectedGroup.name}</Card.Title>
-                    <Card.Description>
-                        {selectedGroup.description}
-                    </Card.Description>
+                <Card.Header class="flex items-center">
+                    <div class="flex-col">
+                        <Card.Title>{selectedGroup.name}</Card.Title>
+                        <Card.Description class="mt-1">
+                            {selectedGroup.description}
+                        </Card.Description>
+                    </div>
+                    <span class="flex-1"></span>
+                    <InviteToGroupDialog group={selectedGroup as Group} {data} />
                 </Card.Header>
                 <Card.Content></Card.Content>
             {:else}

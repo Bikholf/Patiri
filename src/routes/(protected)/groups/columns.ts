@@ -87,6 +87,6 @@ export const columns = (groupForm: SuperForm<Group>): ColumnDef<Group>[] => [
         cell: ({ row }) => {
             // Übergib sowohl die Zeilendaten als auch das Formular-Objekt
             return renderComponent(DataTableActions, { groupData: row.original, groupForm });
-        },
+        }
     }
 ];

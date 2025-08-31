@@ -58,5 +58,11 @@
     "edit_group_description": "Edit the group.",
     "delete_group": "Delete Group",
     "delete_group_description": "Delete the group.",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "leave_group_description": "Leave the group.",
+    "no_results": "No results found.",
+    "invite_to_group": "Invite to Group",
+    "invite_people": "Invite People",
+    "customize_invite_link": "Customize Invite Link",
+    "create_invitation_link": "Create Invitation Link"
 }

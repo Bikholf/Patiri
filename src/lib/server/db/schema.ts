@@ -10,6 +10,7 @@ import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "@auth/core/adapters"
 import "dotenv/config.js"
+import { max, relations } from "drizzle-orm";
 
 const AUTH_DRIZZLE_URL = process.env.AUTH_DRIZZLE_URL;
 
@@ -141,10 +142,20 @@ export const members = pgTable(
     ]
 )
 
-import { relations } from "drizzle-orm";
-import { group } from "console"
-
-// ...existing tables...
+export const invitationLinks = pgTable(
+    "invitationLink",
+    {
+        id: text("id").primaryKey().notNull().$defaultFn(() => crypto.randomUUID()),
+        creatorId: text("creatorId").notNull().references(() => users.id, { onDelete: "cascade" }),
+        groupId: text("groupId").notNull().references(() => groups.id, { onDelete: "cascade" }),
+        linkToken: text("link_token").notNull().unique(),
+        maxUses: integer("maxUses"),
+        currentUses: integer("currentUses").notNull().default(0),
+        expiresAt: timestamp("expiresAt", { mode: "date" }),
+        isActive: boolean("isActive").notNull().default(true),
+        createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+    }
+)
 
 // Relations definieren
 export const usersRelations = relations(users, ({ many }) => ({
@@ -167,6 +178,17 @@ export const membersRelations = relations(members, ({ one }) => ({
     }),
     group: one(groups, {
         fields: [members.groupId],
+        references: [groups.id],
+    }),
+}));
+
+export const invitationLinksRelations = relations(invitationLinks, ({ one }) => ({
+    creator: one(users, {
+        fields: [invitationLinks.creatorId],
+        references: [users.id],
+    }),
+    group: one(groups, {
+        fields: [invitationLinks.groupId],
         references: [groups.id],
     }),
 }));

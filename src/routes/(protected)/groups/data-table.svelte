@@ -6,6 +6,7 @@
     } from "$lib/components/ui/data-table/index.js";
     import * as Table from "$lib/components/ui/table/index.js";
     import type { Group } from "$lib/interfaces/group.js";
+    import * as m from "$paraglide/messages.js";
 
     type DataTableProps<TData, TValue> = {
         columns: ColumnDef<TData, TValue>[];
@@ -74,7 +75,7 @@
                         colspan={columns.length}
                         class="h-24 text-center"
                     >
-                        No results.
+                        {m.no_results()}
                     </Table.Cell>
                 </Table.Row>
             {/each}

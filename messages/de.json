@@ -58,5 +58,11 @@
     "edit_group_description": "Bearbeite die Gruppe.",
     "delete_group": "Gruppe löschen",
     "delete_group_description": "Lösche die Gruppe.",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "leave_group_description": "Verlasse die Gruppe.",
+    "no_results": "Keine Ergebnisse gefunden.",
+    "invite_to_group": "In Gruppe einladen",
+    "invite_people": "Leute einladen",
+    "customize_invite_link": "Einladungslink anpassen",
+    "create_invitation_link": "Einladungslink erstellen"
 }

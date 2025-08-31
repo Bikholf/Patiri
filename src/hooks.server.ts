@@ -37,6 +37,7 @@ const protectionHandle: Handle = async ({ event, resolve }) => {
                                event.url.pathname.startsWith('/dashboard') ||
                                event.url.pathname.startsWith('/settings') ||
                                event.url.pathname.startsWith('/profile');
+                               event.url.pathname.startsWith('/api');
         
         if (isProtectedRoute && !session?.user) {
             // Store the original URL as a query parameter

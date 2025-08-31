@@ -1,8 +1,8 @@
 import type { groupSchema, GroupSchema } from "$db/form-schemas.js";
 import type { InferInput } from "valibot";
-import { db } from "../index.js";
-import { groups, members, users } from "../schema.js";
-import { eq, sql } from "drizzle-orm";
+import { db } from "./index.js";
+import { groups, members, users } from "./schema.js";
+import { eq, sql, and } from "drizzle-orm";
 
 // Alle Gruppen wo ein User Mitglied ist
 export async function getUserGroupsByUserId(userId: string) {
@@ -66,17 +66,17 @@ export async function createGroup(data: NewGroup) {
 type GroupInput = InferInput<typeof groupSchema>;
 
 export async function updateGroup(groupId: string, data: Partial<GroupInput>) {
-  try {
-    const [updated] = await db
-      .update(groups)
-      .set({ ...data, updatedAt: sql`NOW()` })
-      .where(eq(groups.id, groupId))
-      .returning(); // falls Postgres
-    return updated ?? null;
-  } catch (err) {
-    console.error('[updateGroup] error:', err);
-    throw err;
-  }
+    try {
+        const [updated] = await db
+            .update(groups)
+            .set({ ...data, updatedAt: sql`NOW()` })
+            .where(eq(groups.id, groupId))
+            .returning(); // falls Postgres
+        return updated ?? null;
+    } catch (err) {
+        console.error('[updateGroup] error:', err);
+        throw err;
+    }
 }
 
 export async function addUserToGroup(userId: string, groupId: string, role: string = "member") {
@@ -85,6 +85,15 @@ export async function addUserToGroup(userId: string, groupId: string, role: stri
         groupId,
         role
     })
+}
+
+export async function removeUserFromGroup(userId: string, groupId: string) {
+    return await db.delete(members).where(
+        and(
+            eq(members.userId, userId),
+            eq(members.groupId, groupId)
+        )
+    );
 }
 
 export async function deleteGroup(groupId: string) {
