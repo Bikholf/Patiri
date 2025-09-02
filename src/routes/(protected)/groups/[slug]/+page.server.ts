@@ -11,17 +11,17 @@ export const load: PageServerLoad = async (event) => {
     
     // ✅ Robuste Validierung
     if (!session?.user?.id) {
-        console.log("No user ID in session - redirecting to login");
+        // console.log("No user ID in session - redirecting to login");
         throw redirect(302, '/login');
     }
 
     const userId = session.user.id;
     
-    console.log("Valid user id: ", userId);
+    // console.log("Valid user id: ", userId);
     
     const userGroups = await getUserGroupsByUserId(userId);
     
-    console.log("user groups: ", userGroups);
+    // console.log("user groups: ", userGroups);
     
     return {
         session,

@@ -6,7 +6,7 @@ import { redirect, fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { object, string, email, optional, pipe, minLength, maxLength } from 'valibot';
 import { valibot } from 'sveltekit-superforms/adapters';
-import { groupSchema } from '$db/form-schemas.js';
+import { groupSchema, invitationLinkSchema } from '$db/form-schemas.js';
 import { message } from 'sveltekit-superforms';
 import { getLocale } from '$paraglide/runtime.js';
 import * as v from 'valibot';
@@ -15,20 +15,20 @@ import '@valibot/i18n/de';
 type GroupInput = v.InferInput<typeof groupSchema>;
 
 export const load: PageServerLoad = async (event) => {
-    console.log("Load function started");
 
     try {
         const session = await event.locals.auth()
 
         const userId = session.user.id;
 
-        console.log("user id: ", userId);
-        console.log("user id: ", session.user);
+        // console.log("user id: ", userId);
+        // console.log("user id: ", session.user);
 
         const userGroups = await getUserGroupsByUserId(userId);
-        const form = await superValidate(valibot(groupSchema));
+        const groupForm = await superValidate(valibot(groupSchema));
+        const invitationLinkForm = await superValidate(valibot(invitationLinkSchema));
 
-        console.log("user groups: ", userGroups);
+        // console.log("user groups: ", userGroups);
 
         return {
             session,
@@ -40,7 +40,8 @@ export const load: PageServerLoad = async (event) => {
                 }
             ],
             userGroups: userGroups?.memberships || [],
-            groupForm: form
+            groupForm: groupForm,
+            invitationLinkForm: invitationLinkForm
         };
     } catch (error) {
         console.error("Load function error:", error);
@@ -202,6 +203,14 @@ export const actions: Actions = {
         } catch (err) {
             console.error('[delete] DB delete error:', err);
             return fail(500, { form, message: 'Database delete failed', error: String(err) });
+        }
+    },
+
+    invite: async (event) => {
+        const session = await event.locals.auth();
+        const formData = await event.request.formData();
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
         }
     }
 };

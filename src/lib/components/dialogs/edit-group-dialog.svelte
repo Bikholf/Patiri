@@ -46,7 +46,6 @@ import type { Group } from "$lib/interfaces/group.js";
         }
     });
 
-    console.log("Edit form data:", $formData);
 
     let currentLang = $state(getLocale());
 </script>

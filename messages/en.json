@@ -64,5 +64,19 @@
     "invite_to_group": "Invite to Group",
     "invite_people": "Invite People",
     "customize_invite_link": "Customize Invite Link",
-    "create_invitation_link": "Create Invitation Link"
+    "create_invitation_link": "Create Invitation Link",
+    "max_uses": "Max Uses",
+    "max_number_of_uses": "Max Number of Uses",
+    "set_max_number_of_uses": "Set Max Number of Uses",
+    "set_no_limit": "Set No Limit",
+    "expiration_date": "Expiration Date",
+    "set_expiration_date": "Set Expiration Date",
+    "expires_after": "Expires After",
+    "never": "Never",
+    "30_min": "30 Minutes",
+    "1_hour": "1 Hour",
+    "6_hours": "6 Hours",
+    "12_hours": "12 Hours",
+    "1_day": "1 Day",
+    "7_days": "7 Days"
 }

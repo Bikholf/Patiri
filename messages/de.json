@@ -64,5 +64,21 @@
     "invite_to_group": "In Gruppe einladen",
     "invite_people": "Leute einladen",
     "customize_invite_link": "Einladungslink anpassen",
-    "create_invitation_link": "Einladungslink erstellen"
+    "create_invitation_link": "Einladungslink erstellen",
+    "max_uses": "Max. Verwendungen",
+    "left_for_ulimited": "0 bedeutet unbegrenzt",
+    "no_uses_limit": "Keine Verwendungsbeschränkung",
+    "max_number_of_uses": "Maximale Anzahl an Verwendungen",
+    "set_max_number_of_uses": "Max. Verwendungen festlegen",
+    "set_no_limit": "Keine Begrenzung festlegen",
+    "expiration_date": "Ablaufdatum",
+    "set_expiration_date": "Ablaufdatum festlegen",
+    "expires_after": "Läuft ab nach",
+    "never": "Nie",
+    "30_min": "30 Minuten",
+    "1_hour": "1 Stunde",
+    "6_hours": "6 Stunden",
+    "12_hours": "12 Stunden",
+    "1_day": "1 Tag",
+    "7_days": "7 Tage"
 }

@@ -47,13 +47,14 @@
             <Form.Field {form} name="name">
                 <Form.Control>
                     {#snippet children({ props })}
-                        <Form.Label for="name">{m.name()}</Form.Label>
+                        <Form.Label>{m.name()}</Form.Label>
                         <Input
                             bind:value={$formData.name}
                             class="col-span-3"
                             type="text"
                             {...props}
                             placeholder={m["group_creation.name.placeholder"]()}
+                            disabled={$submitting === true}
                         />
                     {/snippet}
                 </Form.Control>

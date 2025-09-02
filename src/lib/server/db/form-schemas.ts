@@ -10,7 +10,9 @@ import {
     boolean,
     number,
     minValue,
-    maxValue
+    maxValue,
+    fallback,
+    nullable
 } from 'valibot';
 
 // export const userFormSchema = object({
@@ -42,19 +44,20 @@ export const invitationLinkSchema = object({
     linkToken: pipe(
         optional(string()),
     ),
-    maxUses: optional(pipe(
-        number(),
-        minValue(1),
-        maxValue(100)
-    )),  // Beschreibung ist optional und hat eine Max-Länge
-    currentUses: optional(pipe(
-        number(),
-        minValue(0),
-        maxValue(100)
-    )),
-    expiresAt: optional(date()),
-    isActive: optional(boolean()),
-    createdAt: optional(date()),
+    maxUses: optional(
+        pipe(
+            number(),
+            minValue(0),
+            maxValue(100)
+        ), 0),
+    currentUses: optional(
+        pipe(
+            number(),
+            minValue(0),
+            maxValue(100)
+        ), 0),
+    expiresAt: nullable(date()),
+    createdAt: optional(date(), new Date()),
 });
 
 export type GroupSchema = typeof groupSchema;

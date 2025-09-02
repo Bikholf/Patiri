@@ -11,8 +11,6 @@
     import InviteToGroupDialog from "$lib/components/dialogs/invite-to-group-dialog.svelte";
 
     let { data } = $props();
-    console.log("group data: ", data.userGroups);
-    console.log("group form: ", data.groupForm);
 
     let selectedGroup: Group | null = $state(null);
 

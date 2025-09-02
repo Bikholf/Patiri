@@ -152,7 +152,6 @@ export const invitationLinks = pgTable(
         maxUses: integer("maxUses"),
         currentUses: integer("currentUses").notNull().default(0),
         expiresAt: timestamp("expiresAt", { mode: "date" }),
-        isActive: boolean("isActive").notNull().default(true),
         createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
     }
 )
